@@ -1,0 +1,6 @@
+.claude
+get-pip
+leads.csv
+nli_cache
+lead_scorer.pkl
+.venv

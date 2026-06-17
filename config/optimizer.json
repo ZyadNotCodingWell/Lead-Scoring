@@ -1,0 +1,14 @@
+{
+  "salespeople": [
+    {"name": "Alice",          "role": "salesman", "capacity": 20},
+    {"name": "Bob",            "role": "salesman", "capacity": 20},
+    {"name": "Carol (Senior)", "role": "senior",   "capacity": 10}
+  ],
+  "industry_quotas": {
+    "Technology":    5,
+    "Finance":       3,
+    "Healthcare":    2,
+    "Manufacturing": 2,
+    "Retail":        2
+  }
+}

@@ -1,0 +1,82 @@
+services:
+
+  # ── FastAPI scoring & ingestion API ──────────────────────────────────────────
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./output:/app/output
+      - ./config:/app/config
+      - hf_cache:/root/.cache/huggingface
+    environment:
+      - HF_HOME=/root/.cache/huggingface
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      # Grace period covers first-time bootstrap (simulate + train can take ~30 s)
+      start_period: 120s
+
+  # ── Streamlit dashboard ───────────────────────────────────────────────────────
+  streamlit:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./output:/app/output
+      - ./config:/app/config
+      - hf_cache:/root/.cache/huggingface
+    environment:
+      - HF_HOME=/root/.cache/huggingface
+    command: >
+      streamlit run streamlit_app.py
+        --server.address 0.0.0.0
+        --server.port 8501
+        --server.headless true
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── Assignment scheduler (runs every 8 hours) ─────────────────────────────────
+  # Calls the optimizer + scoring services directly (no HTTP round-trip).
+  # Starts 60 s after the API is healthy to let any in-progress scoring settle.
+  scheduler:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./output:/app/output
+      - ./config:/app/config
+    command: >
+      sh -c "
+        echo '[scheduler] Waiting 60 s before first run...' &&
+        sleep 60 &&
+        while true; do
+          echo \"[scheduler] $(date '+%Y-%m-%d %H:%M:%S') — running assignment export\" &&
+          python jobs/scheduled_assignment.py &&
+          echo '[scheduler] Done. Next run in 8 hours.' &&
+          sleep 28800;
+        done
+      "
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+# Shared named volume for the HuggingFace model cache (~1.6 GB on first pull).
+# Persists across container restarts so the BART model is not re-downloaded.
+volumes:
+  hf_cache:
