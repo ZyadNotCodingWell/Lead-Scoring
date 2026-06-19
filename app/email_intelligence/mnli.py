@@ -18,114 +18,61 @@ SALES_LABELS = [
     "objection",
     "negative_intent",
     "no_current_need",
-    "off_topic",
 ]
 
 HYPOTHESES: Dict[str, List[str]] = {
 
-    "buying_intent": [
-        "This email asks to proceed with purchasing the product.",
-        "This email explicitly requests to buy or acquire the product.",
-        "This email indicates readiness to move forward with a purchase decision.",
-        "This email asks for pricing in order to evaluate buying the product.",
-        "This email requests a demo or trial to evaluate the product.",
-        "This email asks for onboarding, contract setup, or activation.",
-        "This email asks what the next step is to start using the product.",
-        "This email expresses clear interest in purchasing the product.",
-        "This email indicates the sender is ready to become a customer.",
-        "This email signals intent to adopt the product in their organization.",
-        "This email suggests procurement planning or internal buying discussion.",
-        "This email compares this product with alternatives before deciding to buy.",
-        "This email requests a proposal or contract document to proceed.",
-        "This email asks for documentation needed to get internal approval.",
-        "This email asks what is needed to get started or go live.",
-        "This email is seeking formal paperwork to finalize a purchase.",
-        "this email expresses interest in any form or wish"
-    ],
-
-    "urgency": [
-        "This email asks for a response today or within a specific deadline.",
-        "This email states a deadline that blocks next steps if missed.",
-        "This email says the matter is time-sensitive and requires immediate action.",
-        "This email requires urgent attention to avoid delays in decision-making.",
-        "This email indicates a critical issue that needs immediate resolution.",
-        "This email asks to prioritize this request over others.",
-        "This email pressures for a fast decision or quick turnaround.",
-        "This email indicates an expiring opportunity or time-limited offer.",
-        "This email emphasizes that delays will negatively impact progress.",
-        "This email mentions an end-of-quarter or fiscal deadline.",
-        "This email says they need the solution live or deployed by a specific date.",
-        "This email asks what needs to happen to meet a timeline.",
-        "This email frames the request around an internal deadline or milestone.",
-        "This email indicates a launch or go-live date is approaching.",
-    ],
-
-    "budget_discussion": [
-        "This email asks for pricing or cost information.",
-        "This email requests a quote or invoice.",
-        "This email asks about discounts or pricing options.",
-        "This email discusses payment terms or billing conditions.",
-        "This email asks about refund, cancellation, or contract pricing terms.",
-        "This email compares pricing between different solutions.",
-        "This email requests clarification about total cost or licensing fees.",
-        "This email discusses budget constraints or financial approval.",
-        "This email asks whether the solution fits within a budget range.",
-        "This email negotiates pricing or commercial conditions.",
-        "This email explores cost breakdown or pricing structure details."
+     "buying_intent": [
+        "The sender explicitly states they want to buy the product.",
+        "The sender explicitly states they are ready to proceed with a purchase.",
+        "The sender explicitly asks to start the purchasing process.",
+        "The sender explicitly asks for a contract or agreement to begin.",
+        "The sender explicitly states an intention to become a customer.",
+        "The sender explicitly states that a decision to purchase has been made.",
     ],
 
     "objection": [
-        "This email says the product is not a good fit.",
-        "This email gives reasons that prevent moving forward.",
-        "This email states explicit hesitation or uncertainty about continuing.",
-        "This email raises concerns about product suitability.",
-        "This email challenges the value proposition of the product.",
-        "This email expresses explicit doubt about implementation feasibility.",
-        "This email questions whether the solution meets their needs.",
-        "This email highlights risks or downsides of adopting the product.",
-        "This email indicates resistance to proceeding further."
+        "The sender explicitly states they have concerns about the product.",
+        "The sender explicitly states the product may not meet their needs.",
+        "The sender explicitly raises doubts about whether to proceed.",
+        "The sender explicitly mentions a risk or problem with the product.",
+        "The sender explicitly says something is blocking them from proceeding.",
+    ],
+
+    "urgency": [
+        "The sender explicitly states a deadline.",
+        "The sender asks for an immediate response.",
+        "The sender says a delay will block progress.",
+        "The sender indicates time pressure on the decision.",
+        "The sender states the request is urgent.",
+        "The sender says action is required within a short time frame.",
+    ],
+
+    "budget_discussion": [
+        "The sender asks about the price of the product.",
+        "The sender requests a quote or pricing information.",
+        "The sender discusses budget constraints.",
+        "The sender asks whether the cost fits their budget.",
+        "The sender negotiates pricing or payment terms.",
+        "The sender asks about billing or invoicing.",
     ],
 
     "negative_intent": [
-        "This email explicitly says they are not interested.",
-        "This email rejects the product or proposal.",
-        "This email asks to stop further contact.",
-        "This email states they will not proceed with the offer.",
-        "This email clearly declines any further engagement.",
-        "This email indicates a firm decision against adoption.",
-        "This email refuses to continue discussions about the product."
+        "The sender explicitly states they are not interested.",
+        "The sender states they will not proceed.",
+        "The sender asks to stop further communication.",
+        "The sender rejects the product or proposal.",
+        "The sender declines any further engagement.",
     ],
 
     "no_current_need": [
-        "This email says they already use another solution.",
-        "This email says they are not looking for a new solution.",
-        "This email says the current system is sufficient.",
-        "This email says they are not evaluating new tools.",
-        "This email indicates no current requirement for the product.",
-        "This email states that switching solutions is not necessary.",
-        "This email mentions they are satisfied with existing tools.",
-        "This email indicates the problem is already solved internally.",
-        "This email says there is no business need at the moment.",
-        "This email says they recently signed or renewed a contract with another vendor.",
-        "This email indicates they are locked into an existing agreement.",
-        "This email says they just committed to a competing solution.",
-    ],
-
-    "off_topic": [
-        "This email is not about buying, evaluating, or adopting any product or service.",
-        "This email does not discuss pricing, budget, or other commercial terms.",
-        "This email does not express business interest, objection, or intent about a product or service.",
-        "This email does not involve any decision-making, evaluation, or purchasing process.",
-        "This email is not related to business, sales, or professional services discussions.",
-        "This email is not about product evaluation or procurement decisions.",
-        "This email is primarily administrative or operational communication unrelated to sales.",
-        "This email is a personal or non-business message.",
-        "This email is an automatic or system-generated notification.",
-        "This email does not show any commercial intent or product evaluation.",
-        "This email is not related to buying, budgeting, or procurement decisions."
+        "The sender explicitely states they do not currently need the product.",
+        "The sender explicitely says they are not looking for a solution right now.",
+        "The sender explicitely states their current solution is sufficient.",
+        "The sender explicitely says they are not evaluating alternatives.",
+        "The sender explicitely indicates no active project related to this product.",
     ]
 }
-
 POSITIVE_WEIGHTS = {
     "buying_intent": 1.5 / 2.9,
     "budget_discussion": 1 / 2.9,
@@ -136,7 +83,6 @@ NEGATIVE_WEIGHTS = {
     "objection": 0.1 / 7.1,
     "negative_intent": 1 / 7.1,
     "no_current_need": 1 / 7.1,
-    "off_topic": 5 / 7.1,
 }
 
 
@@ -220,6 +166,11 @@ def _score_contradiction(tokenizer, model, premise: str, hypotheses: List[str]) 
 
     return float(max(0.0, math.tanh(best_score)))
 
+def compute_off_topic(label_scores: Dict[str, float]) -> float:
+    if not label_scores:
+        return 1.0
+    max_signal = max(label_scores.values())
+    return round(max(0.0, 1.0 - max_signal), 4)
 
 def _score_label(tokenizer, model, premise: str, label: str) -> float:
     hypotheses = _build_hypotheses(label)
@@ -234,7 +185,7 @@ def _score_label(tokenizer, model, premise: str, label: str) -> float:
     if not raw_scores:
         return 0.0
 
-    if label == "off_topic":
+    if label == "unclear_or_off_topic":
         # High when no hypothesis is confidently entailed
         # Use raw max so negative deltas (strong contradiction) also suppress off_topic
         max_e = max(raw_scores)
@@ -267,7 +218,8 @@ def analyze_email_mnli(email_body: str, labels: List[str] | None = None) -> Dict
             label_scores[_normalize_label(label)] = round(
                 _score_label(tokenizer, model, premise, label), 4
             )
-
+    label_scores["unclear_or_off_topic"] = compute_off_topic(label_scores)
+    
     engagement_score = compute_email_engagement_score(label_scores)
     signal_type = get_email_signal_type(label_scores)
     top_label = max(label_scores, key=label_scores.get)
@@ -336,3 +288,203 @@ def get_email_signal_type(label_scores: Dict[str, float]) -> str:
 
     return "weak or unclear signal"
 
+def run_mnli_benchmark() -> Dict:
+    """
+      Runs a fixed benchmark suite against the MNLI email analyzer.
+      No parameters. Safe for API exposure.
+    """
+
+    BENCHMARK_EMAILS = [
+      # --- Strong buying intent ---
+      {
+          "id": "buy_1",
+          "email": "We want to buy your product.",
+          "expect": "buying_intent",
+      },
+      {
+          "id": "buy_2",
+          "email": "We are ready to move forward with the purchase.",
+          "expect": "buying_intent",
+      },
+      {
+          "id": "buy_3",
+          "email": "We would like to go ahead and purchase your software.",
+          "expect": "buying_intent",
+      },
+      {
+          "id": "buy_4",
+          "email": "Please count us in, we want to become a customer.",
+          "expect": "buying_intent",
+      },
+      {
+          "id": "buy_5",
+          "email": "We have decided to purchase the enterprise plan.",
+          "expect": "buying_intent",
+      },
+
+     # --- Urgent buying ---
+      {
+          "id": "urgent_1",
+          "email": "We need to finalize this purchase by tomorrow.",
+          "expect": "urgency",
+      },
+      {
+          "id": "urgent_2",
+          "email": "This needs to be sorted out today, it's time sensitive.",
+          "expect": "urgency",
+      },
+      {
+          "id": "urgent_3",
+          "email": "We need a response from you as soon as possible.",
+          "expect": "urgency",
+      },
+
+     # --- Budget discussion ---
+      {
+          "id": "budget_1",
+          "email": "Can you send us pricing and payment terms?",
+          "expect": "budget_discussion",
+      },
+      {
+          "id": "budget_2",
+          "email": "What does your pricing look like for a team of fifty?",
+          "expect": "budget_discussion",
+      },
+      {
+          "id": "budget_3",
+          "email": "Could you send over a formal quote for this project?",
+          "expect": "budget_discussion",
+      },
+      {
+          "id": "budget_4",
+          "email": "We'd like to discuss the billing cycle and invoice schedule.",
+          "expect": "budget_discussion",
+      },
+
+     # --- Mixed intent + objection ---
+      {
+          "id": "mixed_1",
+          "email": "We want to proceed, but we have concerns about integration.",
+          "expect": "unclear_or_off_topic",
+      },
+
+     # --- Objection only ---
+      {
+          "id": "obj_1",
+          "email": "We are not sure this solution fits our needs.",
+          "expect": "objection",
+      },
+      {
+          "id": "obj_2",
+          "email": "We have concerns about how this will integrate with our existing systems.",
+          "expect": "objection",
+      },
+      {
+          "id": "obj_3",
+          "email": "This solution seems too complex for our team to adopt.",
+          "expect": "objection",
+      },
+      {
+          "id": "obj_4",
+          "email": "We are doubtful this will scale to our needs.",
+          "expect": "objection",
+      },
+
+     # --- Explicit rejection ---
+      {
+          "id": "neg_1",
+          "email": "We are not interested and will not proceed.",
+          "expect": "negative_intent",
+      },
+      {
+          "id": "neg_2",
+          "email": "Please remove us from your mailing list, we are not interested.",
+          "expect": "negative_intent",
+      },
+      {
+          "id": "neg_3",
+          "email": "We have decided to go with a different vendor.",
+          "expect": "negative_intent",
+      },
+
+     # --- No current need ---
+      {
+          "id": "cold_1",
+          "email": "We are not evaluating new tools at the moment.",
+          "expect": "no_current_need",
+      },
+      {
+          "id": "cold_2",
+          "email": "Our current provider is meeting all of our needs right now.",
+          "expect": "no_current_need",
+      },
+      {
+          "id": "cold_3",
+          "email": "We are not in the market for this kind of tool at this time.",
+          "expect": "no_current_need",
+      },
+
+     # --- Off topic / unclear ---
+      {
+          "id": "off_1",
+          "email": "The meeting has been rescheduled to Tuesday.",
+          "expect": "unclear_or_off_topic",
+      },
+      {
+          "id": "off_2",
+          "email": "Happy holidays to you and your team.",
+          "expect": "unclear_or_off_topic",
+      },
+      {
+          "id": "off_3",
+          "email": "Please find the attached invoice for last month.",
+          "expect": "unclear_or_off_topic",
+      },
+      {
+          "id": "edge_1",
+          "email": "Sounds good.",
+          "expect": "unclear_or_off_topic",
+      },
+      {
+          "id": "edge_2",
+          "email": "This looks interesting.",
+          "expect": "unclear_or_off_topic",
+      },
+      {
+          "id": "edge_3",
+          "email": "Thanks for the update.",
+          "expect": "unclear_or_off_topic",
+      },
+    ]    
+    
+    results = []
+    failures = []
+
+    for case in BENCHMARK_EMAILS:
+        output = analyze_email_mnli(case["email"])
+
+        passed = output["top_label"] == case["expect"]
+
+        entry = {
+            "id": case["id"],
+            "email": case["email"],
+            "expected_signal": case["expect"],
+            "actual_signal": output["signal_type"],
+            "top_label": output["top_label"],
+            "engagement_score": output["engagement_score"],
+            "labels": output["labels"],
+            "pass": passed,
+        }
+
+        results.append(entry)
+
+        if not passed:
+            failures.append(case["id"])
+
+    return {
+        "total_cases": len(BENCHMARK_EMAILS),
+        "passed": len(BENCHMARK_EMAILS) - len(failures),
+        "failed": len(failures),
+        "failure_ids": failures,
+        "results": results,
+    }

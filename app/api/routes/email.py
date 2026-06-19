@@ -9,7 +9,7 @@ POST /email/analyze
 """
 from fastapi import APIRouter, HTTPException
 from app.schemas.lead import EmailReplyRequest, EmailReplyResponse
-from app.email_intelligence.mnli import analyze_email_mnli
+from app.email_intelligence.mnli import analyze_email_mnli, run_mnli_benchmark
 from app.services import scoring as scoring_svc
 
 MNLI_WEIGHT = 0.6  # 60 % email engagement, 40 % model score
@@ -56,3 +56,7 @@ def analyze_email(request: EmailReplyRequest):
     )
 
 
+@router.get("/benchmark")
+def benchmark_email_analysis():
+    results = run_mnli_benchmark()
+    return {"benchmark_results": results}
